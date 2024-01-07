@@ -34,4 +34,4 @@ override.tf.json
 terraform.rc
 .terraform*
 
-*provider.tf
+terraform/provider.tf
