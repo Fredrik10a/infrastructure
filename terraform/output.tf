@@ -1,5 +1,5 @@
 // ========================== Azure Container Registry (ACR) ==========================
-/*
+
 output "acr_name" {
   description = "Specifies the name of the container registry."
   value       = azurerm_container_registry.acr.name
@@ -24,4 +24,3 @@ output "acr_admin_username" {
   description = "Specifies the admin username of the container registry."
   value       = azurerm_container_registry.acr.admin_username
 }
-*/

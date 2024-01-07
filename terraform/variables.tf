@@ -8,6 +8,10 @@ variable "acr_rg_name" {
   description = "(Required) The name of the resource group in which to create the Container Registry. Changing this forces a new resource to be created."
   type        = string
 }
+variable "environment" {
+  description = "(Required)"
+  type        = string
+}
 variable "acr_location" {
   description = "Location in which to deploy the Container Registry"
   type        = string
@@ -26,16 +30,6 @@ variable "acr_sku" {
     condition     = contains(["Basic", "Standard", "Premium"], var.acr_sku)
     error_message = "The container registry sku is invalid."
   }
-}
-variable "acr_georeplication_locations" {
-  description = "(Optional) A list of Azure locations where the container registry should be geo-replicated."
-  type        = list(string)
-  default     = ["North Europe"]
-}
-variable "acr_log_analytics_retention_days" {
-  description = "Specifies the number of days of the retention policy"
-  type        = number
-  default     = 7
 }
 variable "acr_tags" {
   description = "(Optional) Specifies the tags of the ACR"

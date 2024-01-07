@@ -1,6 +1,6 @@
 # Create the resource group
 resource "azurerm_resource_group" "rg_acr" {
-  name     = lower("${var.rg_prefix}-${var.acr_rg_name}-${local.environment}")
+  name     = lower("${var.rg_prefix}-${var.acr_rg_name}-${var.environment}")
   location = var.acr_location
   tags     = merge(local.default_tags)
   lifecycle {
@@ -29,7 +29,7 @@ resource "azurerm_user_assigned_identity" "acr_identity" {
 
 # Create the Container Registry
 resource "azurerm_container_registry" "acr" {
-  name                  = var.acr_name
+  name                  = lower("${var.acr_name}0${var.environment}")
   resource_group_name   = azurerm_resource_group.rg_acr.name
   location              = azurerm_resource_group.rg_acr.location
   sku                   = var.acr_sku
@@ -50,34 +50,4 @@ resource "azurerm_container_registry" "acr" {
   depends_on = [
     azurerm_resource_group.rg_acr
   ]
-}
-
-# create Diagnostics Settings for ACR
-resource "azurerm_monitor_diagnostic_setting" "diag_acr" {
-  name               = "DiagnosticsSettings"
-  target_resource_id = azurerm_container_registry.acr.id
-
-  log {
-    category = "ContainerRegistryRepositoryEvents"
-    enabled  = true
-    retention_policy {
-      enabled = true
-      days    = var.acr_log_analytics_retention_days
-    }
-  }
-  log {
-    category = "ContainerRegistryLoginEvents"
-    enabled  = true
-    retention_policy {
-      enabled = true
-      days    = var.acr_log_analytics_retention_days
-    }
-  }
-  metric {
-    category = "AllMetrics"
-    retention_policy {
-      enabled = true
-      days    = var.acr_log_analytics_retention_days
-    }
-  }
 }

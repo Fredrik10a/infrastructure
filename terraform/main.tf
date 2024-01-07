@@ -1,5 +1,5 @@
 locals {
-  environment = "dev"
+  environment = var.environment
   default_tags = {
     environment = local.environment
     owner       = "Enewit"
