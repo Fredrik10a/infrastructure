@@ -1,7 +1,6 @@
 locals {
   default_tags = {
     component   = "acr"
-    owner       = "Enewit"
     environment = var.environment
   }
 }
